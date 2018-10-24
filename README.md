@@ -1,8 +1,8 @@
 # GGroup
 
-Carlos Fregenal Sotelo // c.fregenal.2016@alumnso.urjc.es / cfregenal97@gmail.com  
-Tomas Perez Martinez   // t.perez.2016@alumnos.urjc.es   /  tomas22tomas@gmail.com  
-Adrian Pastor Rubio // a.pastorr.2016@alumnos.urjc.es / adrip_97@hotmail.com  
+Carlos Fregenal Sotelo // c.fregenal.2016@alumnso.urjc.es / cfregenal97@gmail.com  /  https://github.com/CarlosFregenal
+Tomas Perez Martinez   // t.perez.2016@alumnos.urjc.es   /  tomas22tomas@gmail.com / https://github.com/tovilu
+Adrian Pastor Rubio // a.pastorr.2016@alumnos.urjc.es / adrip_97@hotmail.com  / https://github.com/AdrianPastor
 
 ## Fase 1
 **Nombre del juego**: GentleBall.  
