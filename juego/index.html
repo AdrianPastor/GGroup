@@ -1,19 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
+
+
+        <script  type="text/javascript" src = "phaser.min.js"></script>
+        <script  type="text/javascript" src = "js/boot.js"></script>
+        <script  type="text/javascript" src = "js/load.js"></script>
+        <script  type="text/javascript" src = "js/menu.js"></script>
+        <script  type="text/javascript" src = "js/play.js"></script>
+  
+
         <style type = "text/css">
-            body
-            {
-                background-image: url("../juego/fotos/MenuSinBotones.png");
-                padding-top: 28%;
-                padding-right: 0%;
-                padding-bottom: 0%;
-                padding-left: 38%;
+            body{
+                background: #000000;
+                padding: 0px;
                 margin: 0px;
             }
         </style>
+
     </head>
     <body>
-        <input type="image" src="../juego/fotos/BotonStart.png" onclick = "location='../juego/cargaJuego.html'">
+        <script>          
+                (function() {
+
+                    var game = new Phaser.Game(800 , 600, Phaser.AUTO, "game");
+
+                    game.state.add("boot",bootState);
+                    game.state.add("load",loadState);
+                    game.state.add("menu",menuState);
+                    //game.state.add('select',selectState);
+                    game.state.add("play",playState);
+                    //game.state.add("win",winState);
+
+                    console.log("Funciono");
+                    game.state.start("boot");
+
+                }) ();
+        </script>
+
     </body>
 </html>
