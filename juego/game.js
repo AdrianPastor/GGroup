@@ -20,11 +20,9 @@ function preload() {
     game.load.image('restart','fotos/BotonRestart.png');
 
     //music
-    game.load.audio('cancion', ['musica/Partida.mp3', 'musica/Partida.ogg']);
+    game.load.audio('cancion', ['musica/menu.mp3', 'musica/menu.ogg']);
     game.load.audio('disparo', ['musica/disparo.mp3', 'musica/disparo.ogg']);
     game.load.audio('rebote', ['musica/rebote.mp3', 'musica/rebote.ogg']);
-    game.load.audio('ganar', ['musica/ganar.mp3', 'musica/ganar.ogg']);
-    game.load.audio('menu', ['musica/menu.mp3', 'musica/menu.ogg']);
     game.load.audio('muerte', ['musica/muerte.mp3', 'musica/muerte.ogg']);
     game.load.audio('golpetazo', ['musica/golpe.mp3', 'musica/golpe.ogg']);
 }
@@ -34,8 +32,6 @@ function preload() {
 var musica;
 var disparo;
 var rebote;
-var ganar;
-var menu;
 var muerte;
 var golpetazo;
 //Jugadores
@@ -108,10 +104,6 @@ function create()
     disparo = game.add.audio('disparo');
 
     rebote = game.add.audio('rebote');
-
-    ganar = game.add.audio('ganar');
-
-    menu = game.add.audio('menu');
 
     muerte = game.add.audio('muerte');
 
@@ -559,11 +551,7 @@ function derrota()
         pelotas.kill();
         pelotas2.kill();
         button = game.add.button(750, 600, 'restart', actionRestart, this, 2, 1, 0);
-        if(terminado=0)
-        {
-            menu.play();
-        }
-        terminado=1;
+
 }
 
 function derrota2()
@@ -585,8 +573,5 @@ function derrota2()
         pelotas2.kill();
         button = game.add.button(750, 600, 'restart', actionRestart, this, 2, 1, 0);
         if(terminado=0)
-        {
-            menu.play();
-        }
-        terminado=1;
+
 }
