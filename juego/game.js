@@ -401,7 +401,7 @@ function fire()
         
         pelota.reset(sprite.x - 12.5, sprite.y - 12.5);
         
-        game.physics.arcade.moveToPointer(pelota, 600);
+        game.physics.arcade.moveToPointer(pelota, 800);
 
         pelota.body.bounce.set(1);
 
@@ -422,7 +422,7 @@ function fire2(sprite2)
 
         pelota2.reset(sprite2.x - 12.5, sprite2.y - 12.5);
 
-        pelota2.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(sprite2.angle, 600));
+        pelota2.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(sprite2.angle, 800));
 
         pelota2.body.bounce.set(1);
 
