@@ -2,14 +2,42 @@ var game = new Phaser.Game(1900, 950, Phaser.CANVAS, 'phaser-example', { preload
 
 function preload() {
 
-    game.load.image('jugador', 'fotos/hero.png');
-    game.load.image('jugador2', 'fotos/enemy.png');
-    game.load.image('pelota', 'fotos/pelota.png');
+    //sprites
+    game.load.image('jugador', 'fotos/SombreroRojo.png');
+    game.load.image('jugador2', 'fotos/SombreroAzul.png');
+    game.load.image('pelota', 'fotos/pelotaroja.png');
+    game.load.image('pelota2', 'fotos/pelotaazul.png');
     game.load.image('pared','fotos/pared.png');
     game.load.image('diana','fotos/diana.png');
+    game.load.image('dianaazul','fotos/dianaazul.png');
+    game.load.image('exit','fotos/BotonExit.png');
+    game.load.image('plantilla','fotos/Plantilla.png');
+    game.load.image('abismo','fotos/abismo2.png');
+    game.load.image('baseroja','fotos/baseroja.png');
+    game.load.image('baseazul','fotos/baseazul.png');
+    game.load.image('baserojamini','fotos/baserojamini.png');
+    game.load.image('baseazulmini','fotos/baseazulmini.png');
+    game.load.image('restart','fotos/BotonRestart.png');
+
+    //music
+    game.load.audio('cancion', ['musica/Partida.mp3', 'musica/Partida.ogg']);
+    game.load.audio('disparo', ['musica/disparo.mp3', 'musica/disparo.ogg']);
+    game.load.audio('rebote', ['musica/rebote.mp3', 'musica/rebote.ogg']);
+    game.load.audio('ganar', ['musica/ganar.mp3', 'musica/ganar.ogg']);
+    game.load.audio('menu', ['musica/menu.mp3', 'musica/menu.ogg']);
+    game.load.audio('muerte', ['musica/muerte.mp3', 'musica/muerte.ogg']);
+    game.load.audio('golpetazo', ['musica/golpe.mp3', 'musica/golpe.ogg']);
 }
 
 //Creamos los objetos del juego
+//Sonidos
+var musica;
+var disparo;
+var rebote;
+var ganar;
+var menu;
+var muerte;
+var golpetazo;
 //Jugadores
 var sprite;
 var sprite2;
@@ -27,17 +55,21 @@ var dianada;
 var dianadc;
 var dianadb;
 //Zonas en las que se moveran los jugadores
-var zonaj1;
-var zonaj2;
-var zonaj1mini;
-var zonaj2mini;
 var zona1;
 var zona2;
 var zona1mini;
 var zona2mini;
 
+//Fondo
+var fondo;
+
 //Texto
 var text;
+
+var plantilla;
+
+//Boton para salir
+var exit;
 
 //Variables auxiliares
 var angle=0;
@@ -52,62 +84,55 @@ var tiempo=0;
 var tiempo2=0;
 var compruebadianas=0;
 var compruebadianas2=0;
-var z1xd=1675;
-var z1xi=1000;
-var z1ya=100;
+var z1xd=1700;
+var z1xi=975;
+var z1ya=75;
 var z1yb=800;
-var z2xd=850;
-var z2xi=175;
-var z2ya=100;
+var z2xd=875;
+var z2xi=150;
+var z2ya=75;
 var z2yb=800;
 
 //Marcador
 var marcadorj1=3;
 var marcadorj2=3;
 
+var terminado=0;
 
 function create() 
 {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    game.stage.backgroundColor = '#757575'; 
+    musica = game.add.audio('cancion');
 
-    //Creamos las zonas
-    zonaj1 = game.add.bitmapData(625,650);
-    zonaj2 = game.add.bitmapData(625,650);
-    zonaj1mini = game.add.bitmapData(475,500);
-    zonaj2mini = game.add.bitmapData(475,500);
-    //Dibujamos las zonas
-    zonaj1.ctx.beginPath();
-    zonaj1.ctx.rect(0,0,650,650);
-    zonaj1.ctx.fillStyle = '#c12e2e';
-    zonaj1.ctx.fill();
+    disparo = game.add.audio('disparo');
 
-    zonaj2.ctx.beginPath();
-    zonaj2.ctx.rect(0,0,650,650);
-    zonaj2.ctx.fillStyle = '#34b9db';
-    zonaj2.ctx.fill();
+    rebote = game.add.audio('rebote');
 
-    zonaj1mini.ctx.beginPath();
-    zonaj1mini.ctx.rect(0,0,775,775);
-    zonaj1mini.ctx.fillStyle = '#c12e2e';
-    zonaj1mini.ctx.fill();
+    ganar = game.add.audio('ganar');
 
-    zonaj2mini.ctx.beginPath();
-    zonaj2mini.ctx.rect(0,0,775,775);
-    zonaj2mini.ctx.fillStyle = '#34b9db';
-    zonaj2mini.ctx.fill();
+    menu = game.add.audio('menu');
 
-    zona1 = game.add.sprite(1050, 150, zonaj1);
-    zona2 = game.add.sprite(225, 150, zonaj2);
-    zona1mini = game.add.sprite(1125, 225, zonaj1mini);
-    zona2mini = game.add.sprite(300, 225, zonaj2mini);
+    muerte = game.add.audio('muerte');
+
+    golpetazo = game.add.audio('golpetazo');
+
+    musica.play();
+
+    fondo = game.add.sprite(0, 0, 'abismo'); 
+
     
+    zona1mini = game.add.sprite(1125, 225, 'baserojamini');
+    zona2mini = game.add.sprite(300, 225, 'baseazulmini');
+    zona1 = game.add.sprite(1050, 150, 'baseroja');
+    zona2 = game.add.sprite(225, 150, 'baseazul');
+    
+    plantilla = game.add.sprite(625, 420, 'plantilla');
     //Creamos el texto que sera el marcador
-    text = game.add.text(game.world.centerX, game.world.centerY, marcadorj2+" - "+marcadorj1, 
+    text = game.add.text(game.world.centerX+15, game.world.centerY, marcadorj2+" - "+marcadorj1, 
     {
         font: "65px Times New Roman",
-        fill: "#ff0000",
+        fill: "#ffffff",
         align: "center"
     });
 
@@ -115,9 +140,9 @@ function create()
 
     //Creamos las dianas 
     //i=izquierda, d=derecha, a=arriba, c=centro, b=abajo
-    dianaia = game.add.sprite(40, 100, 'diana');
-    dianaic = game.add.sprite(5, 425, 'diana');
-    dianaib = game.add.sprite(40, 750, 'diana');
+    dianaia = game.add.sprite(80, 100, 'dianaazul');
+    dianaic = game.add.sprite(45, 425, 'dianaazul');
+    dianaib = game.add.sprite(80, 750, 'dianaazul');
     dianada = game.add.sprite(1750, 100, 'diana');
     dianadc = game.add.sprite(1790, 425, 'diana');
     dianadb = game.add.sprite(1750, 750, 'diana');
@@ -136,9 +161,11 @@ function create()
     pelotas2.enableBody = true;
     pelotas2.physicsBodyType = Phaser.Physics.ARCADE;
 
-    pelotas2.createMultiple(50, 'pelota');
+    pelotas2.createMultiple(50, 'pelota2');
     pelotas2.setAll('checkWorldBounds', true);
     pelotas2.setAll('outOfBoundsKill', true);
+
+	button = game.add.button(1800, 25, 'exit', actionOnClick, this, 2, 1, 0);
 
     //Creamos las paredes 
     pared = game.add.sprite(800,25,'pared');
@@ -187,10 +214,15 @@ function create()
     //Asignamos la velocidad de las paredes
     pared.body.velocity.x=100;
     pared2.body.velocity.x=-100;
+
+    musica.loopFull(0.6);
 }
+
 
 function update() 
 {
+	plantilla.visible=false;
+
     //decimos hacia donde apuntan los jugadores
     sprite.rotation = game.physics.arcade.angleToPointer(sprite);
     sprite2.rotation = angle;
@@ -241,10 +273,10 @@ function update()
     //Creamos las colisiones
     game.physics.arcade.collide(sprite2, pelotas, golpeajugador2);
     game.physics.arcade.collide(sprite, pelotas2, golpeajugador);
-    game.physics.arcade.collide(pared, pelotas);
-    game.physics.arcade.collide(pared, pelotas2);
-    game.physics.arcade.collide(pared2, pelotas);
-    game.physics.arcade.collide(pared2, pelotas2);
+    game.physics.arcade.collide(pared, pelotas, sonidoRebota);
+    game.physics.arcade.collide(pared, pelotas2, sonidoRebota);
+    game.physics.arcade.collide(pared2, pelotas, sonidoRebota);
+    game.physics.arcade.collide(pared2, pelotas2, sonidoRebota);
     game.physics.arcade.collide(dianada, pelotas2, golpeadiana2);
     game.physics.arcade.collide(dianadc, pelotas2, golpeadiana2);
     game.physics.arcade.collide(dianadb, pelotas2, golpeadiana2);
@@ -341,34 +373,12 @@ function update()
 
     if(marcadorj1==0)
     {
-        //Se termina el juego gana jugador 2
-        sprite.body.position.x=1375;
-        sprite.body.position.y=450;
-        sprite2.body.position.x=525;
-        sprite2.body.position.y=450;
-        text.setText("Ha ganado el jugador 2");
-        sprite.body.velocity.x=0;
-        sprite.body.velocity.y=0;
-        sprite2.body.velocity.x=0;
-        sprite2.body.velocity.y=0;
-        pelotas.kill();
-        pelotas2.kill();
+        derrota();
     }
 
     else if(marcadorj2==0)
     {
-        //Se termina el juego gana jugador 1
-        sprite.body.position.x=1375;
-        sprite.body.position.y=450;
-        sprite2.body.position.x=525;
-        sprite2.body.position.y=450;
-        text.setText("Ha ganado el jugador 1");
-        sprite.body.velocity.x=0;
-        sprite.body.velocity.y=0;
-        sprite2.body.velocity.x=0;
-        sprite2.body.velocity.y=0;
-        pelotas.kill();
-        pelotas2.kill();
+        derrota2();
     }
 
     else
@@ -389,11 +399,13 @@ function fire()
 
         var pelota = pelotas.getFirstDead();
         
-        pelota.reset(sprite.x - 25, sprite.y - 25);
+        pelota.reset(sprite.x - 12.5, sprite.y - 12.5);
         
-        game.physics.arcade.moveToPointer(pelota, 500);
+        game.physics.arcade.moveToPointer(pelota, 600);
 
         pelota.body.bounce.set(1);
+
+        disparo.play();
     }
 
 }
@@ -408,11 +420,13 @@ function fire2(sprite2)
 
         var pelota2 = pelotas2.getFirstDead();
 
-        pelota2.reset(sprite2.x - 25, sprite2.y - 25);
+        pelota2.reset(sprite2.x - 12.5, sprite2.y - 12.5);
 
-        pelota2.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(sprite2.angle, 500));
+        pelota2.body.velocity.copyFrom(game.physics.arcade.velocityFromAngle(sprite2.angle, 600));
 
         pelota2.body.bounce.set(1);
+
+        disparo.play();
     }
 
 }
@@ -421,24 +435,28 @@ function golpeadiana2(pelota2)
 {
     pelota2.kill();
     compruebadianas2++;
+    rebote.play();
 }
 
 function golpeadiana(pelota)
 {
     pelota.kill();
     compruebadianas++;
+    rebote.play();
 }
 
 function golpeajugador2(sprite2,pelota)
 {
     golpe2=true;
     pelota.kill();
+    golpetazo.play();
 }
 
 function golpeajugador(sprite,pelota2)
 {
     golpe=true;
     pelota2.kill();
+    golpetazo.play();
 }
 
 function pararjugador(sprite)
@@ -456,7 +474,7 @@ function pararjugador(sprite)
 
 function reducezona(zona1)
 {
-    z1xd=z1xd-75;
+    z1xd=z1xd-100;
     z1xi=z1xi+75;
     z1ya=z1ya+75;
     z1yb=z1yb-75;
@@ -466,7 +484,7 @@ function reducezona(zona1)
 
 function reducezona2(zona2)
 {
-    z2xd=z2xd-75;
+    z2xd=z2xd-100;
     z2xi=z2xi+75;
     z2ya=z2ya+75;
     z2yb=z2yb-75;
@@ -479,11 +497,12 @@ function pierdej1(sprite)
     if(sprite.body.position.x>z1xd || sprite.body.position.x<z1xi || sprite.body.position.y<z1ya || sprite.body.position.y>z1yb)
     {
         marcadorj1--;
-        sprite.body.position.x=1375;
+        sprite.body.position.x=1300;
         sprite.body.position.y=450;
         vida=0;
         golpe=false;
         tiempo=0;
+        muerte.play();
     }
 }
 
@@ -497,5 +516,77 @@ function pierdej2(sprite2)
         vida2=0;
         golpe2=false;
         tiempo2=0;
+        muerte.play();
     }
+}
+
+function actionOnClick() 
+{
+
+    document.location.target = "_blank";
+    document.location.href='../juego/index.html';
+
+}
+
+function actionRestart() 
+{
+
+    document.location.target = "_blank";
+    document.location.href='../juego/cargaJuego.html';
+
+}
+
+function sonidoRebota()
+{
+    rebote.play();
+}
+
+function derrota()
+{
+    //Se termina el juego gana jugador 2
+        musica.destroy();
+        sprite.body.position.x=1375;
+        sprite.body.position.y=450;
+        sprite2.body.position.x=525;
+        sprite2.body.position.y=450;
+        plantilla.visible=true;
+        text.fill='#000fff';
+        text.setText("Ha ganado el jugador 1");
+        sprite.body.velocity.x=0;
+        sprite.body.velocity.y=0;
+        sprite2.body.velocity.x=0;
+        sprite2.body.velocity.y=0;
+        pelotas.kill();
+        pelotas2.kill();
+        button = game.add.button(750, 600, 'restart', actionRestart, this, 2, 1, 0);
+        if(terminado=0)
+        {
+            menu.play();
+        }
+        terminado=1;
+}
+
+function derrota2()
+{
+    //Se termina el juego gana jugador 1
+        musica.destroy();
+        sprite.body.position.x=1375;
+        sprite.body.position.y=450;
+        sprite2.body.position.x=525;
+        sprite2.body.position.y=450;
+        plantilla.visible=true;
+        text.fill='#ff0000';
+        text.setText("Ha ganado el jugador 2");
+        sprite.body.velocity.x=0;
+        sprite.body.velocity.y=0;
+        sprite2.body.velocity.x=0;
+        sprite2.body.velocity.y=0;
+        pelotas.kill();
+        pelotas2.kill();
+        button = game.add.button(750, 600, 'restart', actionRestart, this, 2, 1, 0);
+        if(terminado=0)
+        {
+            menu.play();
+        }
+        terminado=1;
 }
