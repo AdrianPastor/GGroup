@@ -289,22 +289,22 @@ function update()
     {
         if (teclas.left.isDown)
         {
-            sprite.body.velocity.x = -150;       
+            sprite.body.velocity.x = -200;       
         }
     
         if (teclas.right.isDown)
         {
-            sprite.body.velocity.x = 150; 
+            sprite.body.velocity.x = 200; 
         }
 
         if (teclas.up.isDown)
         {
-            sprite.body.velocity.y = -150;
+            sprite.body.velocity.y = -200;
         }
 
         if (teclas.down.isDown)
         {
-            sprite.body.velocity.y = 150;
+            sprite.body.velocity.y = 200;
         }
 
         if (game.input.activePointer.isDown)
@@ -318,22 +318,22 @@ function update()
     { 
         if(game.input.keyboard.isDown(Phaser.KeyCode.A))
         {
-            sprite2.body.velocity.x = -150;
+            sprite2.body.velocity.x = -200;
         }
 
         if(game.input.keyboard.isDown(Phaser.KeyCode.W))
         {
-            sprite2.body.velocity.y = -150;
+            sprite2.body.velocity.y = -200;
         }
 
         if(game.input.keyboard.isDown(Phaser.KeyCode.S))
         {
-            sprite2.body.velocity.y = 150;
+            sprite2.body.velocity.y = 200;
         }
 
         if(game.input.keyboard.isDown(Phaser.KeyCode.D))
         {
-            sprite2.body.velocity.x = 150;
+            sprite2.body.velocity.x = 200;
         }
 
         if(game.input.keyboard.isDown(Phaser.KeyCode.H))
