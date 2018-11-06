@@ -572,6 +572,6 @@ function derrota2()
         pelotas.kill();
         pelotas2.kill();
         button = game.add.button(750, 600, 'restart', actionRestart, this, 2, 1, 0);
-        if(terminado=0)
+       
 
 }
