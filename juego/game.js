@@ -12,7 +12,7 @@ function preload() {
     game.load.image('dianaazul','fotos/dianaazul.png');
     game.load.image('exit','fotos/BotonExit.png');
     game.load.image('plantilla','fotos/Plantilla.png');
-    game.load.image('abismo','fotos/abismo2.png');
+    game.load.image('abismo','fotos/abismo.png');
     game.load.image('baseroja','fotos/baseroja.png');
     game.load.image('baseazul','fotos/baseazul.png');
     game.load.image('baserojamini','fotos/baserojamini.png');
@@ -20,9 +20,11 @@ function preload() {
     game.load.image('restart','fotos/BotonRestart.png');
 
     //music
-    game.load.audio('cancion', ['musica/menu.mp3', 'musica/menu.ogg']);
+    game.load.audio('cancion', ['musica/Partida.mp3', 'musica/Partida.ogg']);
     game.load.audio('disparo', ['musica/disparo.mp3', 'musica/disparo.ogg']);
     game.load.audio('rebote', ['musica/rebote.mp3', 'musica/rebote.ogg']);
+    game.load.audio('ganar', ['musica/ganar.mp3', 'musica/ganar.ogg']);
+    game.load.audio('menu', ['musica/menu.mp3', 'musica/menu.ogg']);
     game.load.audio('muerte', ['musica/muerte.mp3', 'musica/muerte.ogg']);
     game.load.audio('golpetazo', ['musica/golpe.mp3', 'musica/golpe.ogg']);
 }
@@ -32,6 +34,8 @@ function preload() {
 var musica;
 var disparo;
 var rebote;
+var ganar;
+var menu;
 var muerte;
 var golpetazo;
 //Jugadores
@@ -104,6 +108,10 @@ function create()
     disparo = game.add.audio('disparo');
 
     rebote = game.add.audio('rebote');
+
+    ganar = game.add.audio('ganar');
+
+    menu = game.add.audio('menu');
 
     muerte = game.add.audio('muerte');
 
@@ -186,10 +194,6 @@ function create()
     sprite.body.allowRotation = false;
     sprite2.body.allowRotation = false;
 
-    //Hacemos que los objetos no se puedan escapar de la ventana
-    sprite.body.collideWorldBounds = true;
-    sprite2.body.collideWorldBounds = true;
-
     //Hacemos que las paredes y las dianas no se puedan mover
     pared.body.immovable = true;
     pared2.body.immovable = true;
@@ -231,14 +235,14 @@ function update()
         {
             golpe=false;
             tiempo=0;
-            vida=vida+2;
+            vida+=2;
         }
     }
 
     //Comprobamos si el jugador 2 tiene el efecto de choque con la pelota
     if(golpe2!=true)
     {
-         pararjugador(sprite2);
+        pararjugador(sprite2);
     }
     else
     {
@@ -247,7 +251,7 @@ function update()
         {
             golpe2=false;
             tiempo2=0;
-            vida2=vida2+2;
+            vida2+=2;
         }
     }
 
@@ -255,16 +259,44 @@ function update()
     if(pared.body.position.x>=1400 || pared.body.position.x<=250) 
     {
     	pared.body.velocity.x=-pared.body.velocity.x;
-    }
-
-    if(pared2.body.position.x>=1400 || pared2.body.position.x<=250)
-    {
         pared2.body.velocity.x=-pared2.body.velocity.x;
     }
 
     //Creamos las colisiones
-    game.physics.arcade.collide(sprite2, pelotas, golpeajugador2);
-    game.physics.arcade.collide(sprite, pelotas2, golpeajugador);
+    if(pelotas2.getClosestTo(sprite)!=null)
+    {       
+        var pelota2 = pelotas2.getClosestTo(sprite);
+        var posx = sprite.body.position.x+37.5;
+        var posy = sprite.body.position.y+37.5;
+        var pospx = pelota2.body.position.x;
+        var pospy = pelota2.body.position.y;
+        if(pospx+12.5<posx+50 && pospx+12.5>posx-50 && pospy+12.5<posy+50 && pospy+12.5>posy-50)
+        {
+            sprite.body.velocity.x = pelota2.body.velocity.x*0.5;
+            sprite.body.velocity.y = pelota2.body.velocity.y*0.5;
+            golpe=true;
+            pelota2.kill();
+            golpetazo.play();
+        }
+    }
+
+    if(pelotas.getClosestTo(sprite2)!=null)
+    {
+        var pelota = pelotas.getClosestTo(sprite2);
+        var posx = sprite2.body.position.x+37.5;
+        var posy = sprite2.body.position.y+37.5;
+        var pospx = pelota.body.position.x;
+        var pospy = pelota.body.position.y;
+        if(pospx+12.5<posx+50 && pospx+12.5>posx-50 && pospy+12.5<posy+50 && pospy+12.5>posy-50)
+        {
+            sprite2.body.velocity.x=pelota.body.velocity.x*0.5;
+            sprite2.body.velocity.y=pelota.body.velocity.y*0.5;
+            golpe2=true;
+            pelota.kill();
+            golpetazo.play();
+        }
+    }
+
     game.physics.arcade.collide(pared, pelotas, sonidoRebota);
     game.physics.arcade.collide(pared, pelotas2, sonidoRebota);
     game.physics.arcade.collide(pared2, pelotas, sonidoRebota);
@@ -340,7 +372,7 @@ function update()
 
         if(game.input.keyboard.isDown(Phaser.KeyCode.SPACEBAR))
         {
-            fire2(sprite2);
+            fire2();
         }
     }
 
@@ -348,7 +380,6 @@ function update()
     if(compruebadianas==3)
     {
         reducezona2(zona2);
-        console.log("Se reduce la zona 2");
         compruebadianas=0;
     }
 
@@ -356,12 +387,11 @@ function update()
     if(compruebadianas2==3)
     {
         reducezona(zona1);
-        console.log("Se reduce la zona 1");
         compruebadianas2=0;
     }
 
-    pierdej1(sprite);
-    pierdej2(sprite2);
+    pierdej1();
+    pierdej2();
 
     if(marcadorj1==0)
     {
@@ -403,7 +433,7 @@ function fire()
 }
 
 //Disparo pelotas jugador 2
-function fire2(sprite2)
+function fire2()
 {
 
     if (game.time.now > nextFire2 && pelotas2.countDead() > 0)
@@ -435,20 +465,6 @@ function golpeadiana(pelota)
     pelota.kill();
     compruebadianas++;
     rebote.play();
-}
-
-function golpeajugador2(sprite2,pelota)
-{
-    golpe2=true;
-    pelota.kill();
-    golpetazo.play();
-}
-
-function golpeajugador(sprite,pelota2)
-{
-    golpe=true;
-    pelota2.kill();
-    golpetazo.play();
 }
 
 function pararjugador(sprite)
@@ -484,7 +500,7 @@ function reducezona2(zona2)
     zona2.y=2000;
 }
 
-function pierdej1(sprite)
+function pierdej1()
 {
     if(sprite.body.position.x>z1xd || sprite.body.position.x<z1xi || sprite.body.position.y<z1ya || sprite.body.position.y>z1yb)
     {
@@ -498,7 +514,7 @@ function pierdej1(sprite)
     }
 }
 
-function pierdej2(sprite2)
+function pierdej2()
 {
     if(sprite2.body.position.x>z2xd || sprite2.body.position.x<z2xi || sprite2.body.position.y<z2ya || sprite2.body.position.y>z2yb)
     {
@@ -551,7 +567,11 @@ function derrota()
         pelotas.kill();
         pelotas2.kill();
         button = game.add.button(750, 600, 'restart', actionRestart, this, 2, 1, 0);
-
+        if(terminado=0)
+        {
+            menu.play();
+        }
+        terminado=1;
 }
 
 function derrota2()
@@ -572,6 +592,9 @@ function derrota2()
         pelotas.kill();
         pelotas2.kill();
         button = game.add.button(750, 600, 'restart', actionRestart, this, 2, 1, 0);
-       
-
+        if(terminado=0)
+        {
+            menu.play();
+        }
+        terminado=1;
 }
