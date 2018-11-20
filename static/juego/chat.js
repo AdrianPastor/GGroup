@@ -4,6 +4,7 @@ function loadChats(callback){
 		url: 'http://192.168.1.137:8080/chats'
 	}).done(function(chats){
 		console.log('Chats loaded: ' + JSON.stringify(chats));
+		//chats.guarda();
 		callback(chats);
 	})
 }
@@ -20,6 +21,7 @@ function createChat(chat, callback){
 		}
 	}).done(function(chat){
 		console.log("Chat created" + JSON.stringify(chat));
+		//chats.carga();
 		callback(chat);
 	})
 }
@@ -118,7 +120,7 @@ $(document).ready(function () {
     })
 
     //Handle add button
-    $("#add-but").click(function () {
+    $("#add-but").click(function (){
 
         var valor = input.val();
         input.val('');
