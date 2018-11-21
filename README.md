@@ -35,9 +35,11 @@ Cuando la partida acaba sale en pantalla quién ha ganado y Aparece un botón "R
 
 ## Fase 3  
 **Diagrama de Estados**  
-![alt text](https://imgur.com/a/sdtfeEN.png)  
+![alt text](https://i.imgur.com/n6iVQD9.png)  
+  
 **Diagrama de Clases**    
-![alt text](https://imgur.com/a/1fixZ4B.png)  
+![alt text](https://i.imgur.com/fh3BBzA.png)  
+  
 
 
 
