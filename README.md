@@ -32,3 +32,12 @@ Aquí podemos ver lo que es el propio juego en el que podemos distinguir las 2 z
 
 ![alt text](https://i.imgur.com/qv5zKnu.png)
 Cuando la partida acaba sale en pantalla quién ha ganado y Aparece un botón "Restart" que hara que el juego se vuelva a iniciar.
+
+## Fase 3  
+**Diagrama de Estados**  
+![alt text](https://imgur.com/a/sdtfeEN)  
+**Diagrama de Clases**    
+![alt text](https://imgur.com/a/1fixZ4B)  
+
+
+
