@@ -19,3 +19,16 @@ Adrian Pastor Rubio // a.pastorr.2016@alumnos.urjc.es / adrip_97@hotmail.com  / 
 
 ![alt text](https://cdn.apkmonk.com/images/com.zombs.royale.png)  
   *ZombsRoyale.io*
+
+## Fase 2
+![alt text](https://i.imgur.com/NTGAcNP.png)
+Este es nuestro menú principal desde el cual pulsando el botón "Controls" accedemos a los controles de los jugadores y pulsando el botón "Start" comienza una partida.
+
+![alt text](https://i.imgur.com/gQyD6b9.png)
+En los controles podemos ver con qué teclas podemos manejar cada personaje.
+
+![alt text](https://i.imgur.com/OM6TZCb.png)
+Aquí podemos ver lo que es el propio juego en el que podemos distinguir las 2 zonas de los jugadores, las barreras, las dianas, la puntuación y el porcentaje de cada jugador. Cabe destacar que en cualquier momento podremos salir del juego pulsando el botón "Exit" que nos devolverá al menú principal.
+
+![alt text](https://i.imgur.com/qv5zKnu.png)
+Cuando la partida acaba sale en pantalla quién ha ganado y Aparece un botón "Restart" que hara que el juego se vuelva a iniciar.
