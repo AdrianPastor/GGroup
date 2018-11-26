@@ -29,8 +29,8 @@ Gentleball.MainMenu.prototype = {
 
   actionOnClick0: function () 
   {
-      menu.destroy();
-    this.game.state.start('Game');
+    
+    this.game.state.start('Lobby');
     
   },
 

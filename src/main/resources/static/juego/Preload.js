@@ -13,7 +13,11 @@ Gentleball.Preload.prototype = {
 	  //Menu controles
 	  this.game.load.image('FondoControles', 'fotos/Controles.png');
 	  this.game.load.image('BotonExit2', 'fotos/BotonExit2.png');
-	
+          
+        //Lobby
+        this.game.load.image('BotonPlay', 'fotos/BotonPlay.png');
+        this.game.load.image('LobbyText', 'fotos/LobbyText.png');
+	this.game.load.image('Fondo', 'fotos/Fondo.png');
 
   	//sprites
     this.game.load.image('jugador', 'fotos/SombreroRojo.png');
