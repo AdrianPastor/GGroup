@@ -4,7 +4,7 @@ public class Chat {
 
 	private long id;
 	private String value;
-	private boolean checked;
+	private String user;
 
 	public Chat() {
 	}
@@ -25,17 +25,17 @@ public class Chat {
 		this.value = value;
 	}
 
-	public boolean getChecked() {
-		return checked;
+	public String getUser() {
+		return user;
 	}
 
-	public void setChecked(boolean checked) {
-		this.checked = checked;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
-		return "Jugador [id=" + id + ", value=" + value + ", checked=" + checked + "]";
+		return "Jugador [id=" + id + ", value=" + value + ", user=" + user + "]";
 	}
 
 }

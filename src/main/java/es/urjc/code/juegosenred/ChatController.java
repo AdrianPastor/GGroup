@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Scanner;
@@ -30,39 +31,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/chats")
 public class ChatController {
 
-	Map<Long, Chat> chats = new ConcurrentHashMap<>(); 
+	Map<Long, Chat> chats = new ConcurrentHashMap<>();
 	AtomicLong nextId = new AtomicLong(0);
+	boolean confirmado=false;
+	String newUser = "";
 	
-	
-	public void guarda() throws IOException
-	{
-		for(int i=0;i<chats.size();i++)
-		{
-			File fichero = new File ("C:\\Users\\maris\\Desktop\\Gentleball\\src\\main\\resources\\static\\juego\\chatinfo.txt");
-			FileWriter fw = new FileWriter(fichero);
-			String x = chats.get(i).getValue();
-			fw.write(x+"\n");
-			fw.close();
-		}
-	}
-	
+		
 	public void carga() throws IOException
 	{
-			chats = new ConcurrentHashMap<>();
-			File fichero = new File("C:\\Users\\maris\\Desktop\\Gentleball\\src\\main\\resources\\static\\juego\\chatinfo.txt");
-			Scanner s = null;
-			s = new Scanner(fichero);
-			Chat y = new Chat();
-			while (s.hasNextLine()) {
-				String linea = s.nextLine();
-				y.setValue(linea);
-				this.nuevoChat(y);
-			}
-			s.close();
+		File fichero = new File("C:\\Users\\maris\\Desktop\\GGroup-3.0\\src\\main\\resources\\static\\juego\\chatinfo.txt");
+		Scanner s = null;
+		s = new Scanner(fichero);
+		String linea="";
+		while (s.hasNextLine()) 
+		{
+			linea = s.nextLine();
+		}
+		newUser = linea;
+		s.close();
 	}
 	
 	@GetMapping
-	public Collection<Chat> chats() {
+	public Collection<Chat> chats() throws IOException
+	{	
+		if(confirmado==false)
+		{
+			carga();
+			confirmado = true;
+		}
 		return chats.values();
 	}
 
@@ -72,6 +68,8 @@ public class ChatController {
 		
 		long id = nextId.incrementAndGet();
 		chat.setId(id);
+		chat.setValue(newUser);
+		chat.setUser(newUser);
 		chats.put(id, chat);
 		return chat;
 		

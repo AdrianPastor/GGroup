@@ -1,11 +1,15 @@
 package es.urjc.code.juegosenred;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,25 +26,66 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/jugadores")
 public class JugadorController {
 
-	Map<Long, Jugador> jugadores = new ConcurrentHashMap<>(); 
-	AtomicLong nextIp = new AtomicLong(0);
+	Map<Long, Jugador> jugadores = new HashMap<Long, Jugador>();
+	long nextIp = -1;
+	File fichero = new File("jugadores.txt");
 	
 	@GetMapping
-	public Collection<Jugador> jugadores() {
+	public Collection<Jugador> jugadores() throws FileNotFoundException {
+		long ip = -1;
+		Scanner s = null;
+		s = new Scanner(fichero);
+		while (s.hasNextLine()) 
+		{
+			Jugador y = new Jugador();
+			String linea = s.nextLine();
+			y.setNombre(linea);
+			ip++;
+			y.setIp(ip);
+			jugadores.put(ip, y);
+		}
+		s.close();
+		nextIp=ip;
 		return jugadores.values();
 	}
-
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Jugador nuevoJugador(@RequestBody Jugador jugador) {
+	public Jugador nuevoJugador(@RequestBody Jugador jugador) throws IOException {
 		
-		long ip = nextIp.incrementAndGet();
-		jugador.setIp(ip);
-		jugadores.put(ip, jugador);
-		return jugador;
+		if(compruebajugador(jugador.getNombre())==false)
+		{
+			nextIp++;
+			long ip = nextIp;
+			jugador.setIp(ip);
+			jugadores.put(ip, jugador);
+			FileWriter fw = new FileWriter(fichero,true);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.write(jugador.getNombre()+"\n");
+			pw.close();
+			fw.close();
+			return jugador;
+		}
+		else
+		{
+			System.out.println("Ese nombre ya existe");
+			return null;
+		}
 		
 	}
-
+	
+	public boolean compruebajugador(String nombre)
+	{
+		boolean comprobacion=false;
+		
+		if(jugadores.containsValue(nombre))
+		{
+			comprobacion=true;
+		}
+		
+		return comprobacion;
+	}
+	
 	@PutMapping("/{ip}")
 	public ResponseEntity<Jugador> actulizaJugador(@PathVariable long ip, @RequestBody Jugador jugadorActualizado) {
 

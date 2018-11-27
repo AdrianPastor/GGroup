@@ -4,7 +4,6 @@ public class Jugador {
 
 	private long ip;
 	private String nombre;
-	private boolean conectado;
 
 	public Jugador() {
 	}
@@ -25,17 +24,9 @@ public class Jugador {
 		this.nombre = nombre;
 	}
 
-	public boolean getConectado() {
-		return conectado;
-	}
-
-	public void setConectado(boolean conectado) {
-		this.conectado = conectado;
-	}
-
 	@Override
 	public String toString() {
-		return "Jugador [ip=" + ip + ", nombre=" + nombre + ", conectado=" + conectado + "]";
+		return "Jugador [ip=" + ip + ", nombre=" + nombre +"]";
 	}
 
 }

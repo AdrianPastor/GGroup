@@ -2,11 +2,11 @@
 //Cargar chats del servidor
 function loadChats(callback){
 	$.ajax({
-		url: 'http://192.168.1.137:8080/chats'
+		url: 'http://10.10.144.120:8080/chats'
 	}).done(function(chats){
 		console.log('Chats loaded: ' + JSON.stringify(chats));
 		callback(chats);
-		loadChats(callback);
+		setTimeout(loadChats(callback),5000);
 	})
 }
 
@@ -14,7 +14,7 @@ function loadChats(callback){
 function createChat(chat, callback){
 	$.ajax({
 		method: "POST",
-		url: 'http://192.168.1.137:8080/chats',
+		url: 'http://10.10.144.120:8080/chats',
 		data: JSON.stringify(chat),
 		processData: false,
 		headers: {
@@ -30,7 +30,7 @@ function createChat(chat, callback){
 function updateChat(chat) {
     $.ajax({
         method: 'PUT',
-        url: 'http://192.168.1.137:8080/chats/' + chat.id,
+        url: 'http://10.10.144.120:8080/chats/' + chat.id,
         data: JSON.stringify(chat),
         processData: false,
         headers: {
@@ -45,7 +45,7 @@ function updateChat(chat) {
 function deleteChat(chatId) {
     $.ajax({
         method: 'DELETE',
-        url: 'http://192.168.1.137:8080/chats/' + chatId
+        url: 'http://10.10.144.120:8080/chats/' + chatId
     }).done(function (chat) {
         console.log("Se borro el chat " + chatId)
     })
