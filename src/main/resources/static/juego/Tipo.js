@@ -46,7 +46,3 @@ Gentleball.Tipo.prototype = {
   },
 
 };
-
-
-
-

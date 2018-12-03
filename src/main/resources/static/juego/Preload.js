@@ -5,56 +5,56 @@ Gentleball.Preload = function(){};
 
 Gentleball.Preload.prototype = {
   preload: function() {
-  	//MainMenu
-  	this.game.load.image('MenuSinBotones', 'fotos/MenuSinBotones.png');
-  	this.game.load.image('BotonStart', 'fotos/BotonStart.png');
-  	this.game.load.image('BotonControles', 'fotos/BotonControles.png');
+    //MainMenu
+    this.game.load.image('MenuSinBotones', 'juego/fotos/MenuSinBotones.png');
+    this.game.load.image('BotonStart', 'juego/fotos/BotonStart.png');
+    this.game.load.image('BotonControles', 'juego/fotos/BotonControles.png');
 
-	  //Menu controles
-	  this.game.load.image('FondoControles', 'fotos/Controles.png');
-	  this.game.load.image('BotonExit2', 'fotos/BotonExit2.png');
-	
+    //Menu controles
+    this.game.load.image('FondoControles', 'juego/fotos/Controles.png');
+    this.game.load.image('BotonExit2', 'juego/fotos/BotonExit2.png');
+  
     //Lobby
-    this.game.load.image('BotonPlay', 'fotos/BotonPlay.png');
-    this.game.load.image('LobbyText', 'fotos/LobbyText.png');
-    this.game.load.image('Fondo', 'fotos/Fondo.png');
+    this.game.load.image('BotonPlay', 'juego/fotos/BotonPlay.png');
+    this.game.load.image('LobbyText', 'juego/fotos/LobbyText.png');
+    this.game.load.image('Fondo', 'juego/fotos/Fondo.png');
     
     // Online/Offline
-    this.game.load.image('Online', 'fotos/Online.png');
-    this.game.load.image('Offline', 'fotos/Offline.png');
+    this.game.load.image('Online', 'juego/fotos/Online.png');
+    this.game.load.image('Offline', 'juego/fotos/Offline.png');
 
-  	//sprites
-    this.game.load.image('jugador', 'fotos/SombreroRojo.png');
-    this.game.load.image('jugador2', 'fotos/SombreroAzul.png');
-    this.game.load.image('pelota', 'fotos/pelotaroja.png');
-    this.game.load.image('pelota2', 'fotos/pelotaazul.png');
-    this.game.load.image('pared','fotos/pared.png');
-    this.game.load.image('diana','fotos/diana.png');
-    this.game.load.image('dianaazul','fotos/dianaazul.png');
-    this.game.load.image('exit','fotos/BotonExit.png');
-    this.game.load.image('plantilla','fotos/Plantilla.png');
-    this.game.load.image('abismo','fotos/abismo.png');
-    this.game.load.image('baseroja','fotos/baseroja.png');
-    this.game.load.image('baseazul','fotos/baseazul.png');
-    this.game.load.image('baserojamini','fotos/baserojamini.png');
-    this.game.load.image('baseazulmini','fotos/baseazulmini.png');
-    this.game.load.image('restart','fotos/BotonRestart.png');
+    //sprites
+    this.game.load.image('jugador', 'juego/fotos/SombreroRojo.png');
+    this.game.load.image('jugador2', 'juego/fotos/SombreroAzul.png');
+    this.game.load.image('pelota', 'juego/fotos/pelotaroja.png');
+    this.game.load.image('pelota2', 'juego/fotos/pelotaazul.png');
+    this.game.load.image('pared','juego/fotos/pared.png');
+    this.game.load.image('diana','juego/fotos/diana.png');
+    this.game.load.image('dianaazul','juego/fotos/dianaazul.png');
+    this.game.load.image('exit','juego/fotos/BotonExit.png');
+    this.game.load.image('plantilla','juego/fotos/Plantilla.png');
+    this.game.load.image('abismo','juego/fotos/abismo.png');
+    this.game.load.image('baseroja','juego/fotos/baseroja.png');
+    this.game.load.image('baseazul','juego/fotos/baseazul.png');
+    this.game.load.image('baserojamini','juego/fotos/baserojamini.png');
+    this.game.load.image('baseazulmini','juego/fotos/baseazulmini.png');
+    this.game.load.image('restart','juego/fotos/BotonRestart.png');
 
     //music
-    this.game.load.audio('cancion', ['musica/Partida.mp3', 'musica/Partida.ogg']);
-    this.game.load.audio('disparo', ['musica/disparo.mp3', 'musica/disparo.ogg']);
-    this.game.load.audio('rebote', ['musica/rebote.mp3', 'musica/rebote.ogg']);
-    this.game.load.audio('ganar', ['musica/ganar.mp3', 'musica/ganar.ogg']);
-    this.game.load.audio('menu', ['musica/menu.mp3', 'musica/menu.ogg']);
-    this.game.load.audio('muerte', ['musica/muerte.mp3', 'musica/muerte.ogg']);
-    this.game.load.audio('golpetazo', ['musica/golpe.mp3', 'musica/golpe.ogg']);
+    this.game.load.audio('cancion', ['juego/musica/Partida.mp3', 'juego/musica/Partida.ogg']);
+    this.game.load.audio('disparo', ['juego/musica/disparo.mp3', 'juego/musica/disparo.ogg']);
+    this.game.load.audio('rebote', ['juego/musica/rebote.mp3', 'juego/musica/rebote.ogg']);
+    this.game.load.audio('ganar', ['juego/musica/ganar.mp3', 'juego/musica/ganar.ogg']);
+    this.game.load.audio('menu', ['juego/musica/menu.mp3', 'juego/musica/menu.ogg']);
+    this.game.load.audio('muerte', ['juego/musica/muerte.mp3', 'juego/musica/muerte.ogg']);
+    this.game.load.audio('golpetazo', ['juego/musica/golpe.mp3', 'juego/musica/golpe.ogg']);
 
-  	},
+    },
 
 
   create: function() {
 
-  	this.state.start('MainMenu'); //'MainMenu'
+    this.state.start('MainMenu'); //'MainMenu'
 
   }
 };
