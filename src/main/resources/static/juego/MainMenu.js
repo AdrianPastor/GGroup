@@ -20,7 +20,7 @@ Gentleball.MainMenu.prototype = {
 
     	controls = this.game.add.button(this.game.world.centerX-114, this.game.world.centerY+120,'BotonControles', this.actionOnClick1, this,1,0);
         
-    	exit = this.game.add.button(947.36, 13.16, 'exit', this.actionOnClick2, this, 1, 0);
+    	//exit = this.game.add.button(947.36, 13.16, 'exit', this.actionOnClick2, this, 1, 0);
     	
     	menu = this.game.add.audio('menu');
        
@@ -32,22 +32,22 @@ Gentleball.MainMenu.prototype = {
 
   actionOnClick0: function () 
   {
-	  menu.destroy();
-      this.game.state.start('Game');
+	 
+      this.game.state.start('Tipo');
   },
 
   actionOnClick1: function () 
   { 
-	  menu.destroy();
+	
     this.game.state.start('Controles'); 
   },
-  
+ /* 
   actionOnClick2: function () 
   { 
 	  menu.destroy();
 	  this.game.state.start('Lobby');
   },
-
+*/
 };
 
 //Cargar chats del servidor

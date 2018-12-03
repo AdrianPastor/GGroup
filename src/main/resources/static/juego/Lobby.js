@@ -20,12 +20,22 @@ Gentleball.Lobby.prototype = {
         LobbyText = this.game.add.tileSprite(this.game.world.centerX-125, this.game.world.centerY-250, 250, 150, 'LobbyText');
     	
         play = this.game.add.button(this.game.world.centerX-115, this.game.world.centerY+100,'BotonPlay', this.actionOnClick1, this,1,0);
+        
+        exit = this.game.add.button(947.36, 13.16, 'exit', this.actionOnClick0, this, 1, 0);
   },
 
   actionOnClick1: function () 
   {
-    this.game.state.start('MainMenu'); 
+	menu.destroy();
+    this.game.state.start('Game'); 
   },
+  
+  actionOnClick0: function () 
+  { 
+    menu.destroy();
+    this.game.state.start('MainMenu');
+    
+  }
 
 };
 

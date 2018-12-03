@@ -18,6 +18,10 @@ Gentleball.Preload.prototype = {
     this.game.load.image('BotonPlay', 'fotos/BotonPlay.png');
     this.game.load.image('LobbyText', 'fotos/LobbyText.png');
     this.game.load.image('Fondo', 'fotos/Fondo.png');
+    
+    // Online/Offline
+    this.game.load.image('Online', 'fotos/Online.png');
+    this.game.load.image('Offline', 'fotos/Offline.png');
 
   	//sprites
     this.game.load.image('jugador', 'fotos/SombreroRojo.png');
@@ -50,7 +54,7 @@ Gentleball.Preload.prototype = {
 
   create: function() {
 
-  	this.state.start('Lobby'); //'Lobby'
+  	this.state.start('MainMenu'); //'MainMenu'
 
   }
 };
