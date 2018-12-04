@@ -36,6 +36,14 @@ Gentleball.Lobby.prototype = {
         
         setInterval(loadJugadores,3000);
   	},
+  	
+  	update: function()
+  	{
+  		if(servidorapagado==false)
+  		{
+  			
+  		}
+  	}
 
   actionOnClick1: function () 
   {
