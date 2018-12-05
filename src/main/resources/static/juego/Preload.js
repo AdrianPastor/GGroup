@@ -22,6 +22,10 @@ Gentleball.Preload.prototype = {
     // Online/Offline
     this.game.load.image('Online', 'juego/fotos/Online.png');
     this.game.load.image('Offline', 'juego/fotos/Offline.png');
+    
+    //Caida servidor
+    this.game.load.image('serveroff', 'juego/fotos/serveroff.png');
+    this.game.load.image('botonserveroff', 'juego/fotos/botonserveroff.png');
 
     //sprites
     this.game.load.image('jugador', 'juego/fotos/SombreroRojo.png');

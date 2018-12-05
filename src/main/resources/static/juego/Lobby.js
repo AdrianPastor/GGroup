@@ -5,9 +5,23 @@ var play;
 var LobbyText;
 var exit;
 var servidorapagado=true;
+var info='';
+var jugadoreslista;
+var serveroff;
+var botonserveroff;
+
+var currentJugador;
+
+
+var input = document.getElementById('value-input');
+
+var bot = document.getElementById('add-but');
+
+input.style.display = 'none';
+bot.style.display = 'none';
 
 var ipserver;
-ipserver = prompt('Introduzca la ip del servidor:','192.168.1.1:8080');
+ipserver = prompt('Introduzca la ip del servidor:','192.168.1.100:8080');
 
 
 var iplocal;
@@ -22,17 +36,35 @@ Gentleball.Lobby = function(){};
 Gentleball.Lobby.prototype = {
 	create: function() 
   	{
+		
+		
+		
   		this.game.world.setBounds(0, 0, 1000, 500);
 
     	//background
     	this.background = this.game.add.tileSprite(0, 0, 1000, 500, 'Fondo');
-        
 
         LobbyText = this.game.add.tileSprite(this.game.world.centerX-125, this.game.world.centerY-250, 250, 150, 'LobbyText');
     	
         play = this.game.add.button(this.game.world.centerX-115, this.game.world.centerY+100,'BotonPlay', this.actionOnClick1, this,1,0);
         
         exit = this.game.add.button(947.36, 13.16, 'exit', this.actionOnClick2, this, 1, 0);
+       
+        var style = {font: "bold 38px 'VT323'", fill: "#000000", align: "left" };
+        jugadoreslista = this.game.add.text(50, 70,info, style);
+        
+        serveroff = this.game.add.sprite(167, 84, 'serveroff');
+        serveroff.visible=false;
+        
+        botonserveroff = this.game.add.button(374, 255, 'botonserveroff', this.actionOnClick3, this, 1, 0);
+        botonserveroff.visible=false;
+        
+        
+        
+        
+        
+        input.style.display = '';
+        bot.style.display = '';
         
         setInterval(loadJugadores,3000);
   	},
@@ -43,17 +75,41 @@ Gentleball.Lobby.prototype = {
   		{
   			
   		}
-  	}
+  		else
+  		{
+  			serveroff.visible=true;
+  			botonserveroff.visible=true;
+  		}
+  		
+  		jugadoreslista.setText(info);
+  	},
 
   actionOnClick1: function () 
   {
-    this.game.state.start('Game'); 
+    this.game.state.start('Game');
+    input.style.display = 'none';
+    bot.style.display = 'none';
+ ;
   },
   
   actionOnClick2: function () 
   {
-    this.game.state.start('Tipo'); 
+	 deleteJugador(currentJugador.nombre);
+    this.game.state.start('Tipo');
+    input.style.display = 'none';
+    bot.style.display = 'none';
   },
+  
+  actionOnClick3: function () 
+  {
+	menu.destroy();
+	deleteJugador(iplocal);
+    this.game.state.start('MainMenu');
+    input.style.display = 'none';
+    bot.style.display = 'none';
+  },
+  
+
 
 };
 
@@ -65,6 +121,13 @@ function loadJugadores(callback) {
         url: 'http://'+ipserver+'/jugadores'
     }).done(function (jugadores){
         console.log('Jugadores loaded: ' + JSON.stringify(jugadores));
+        info='Jugadores:\n';
+        for(var i=0; i<jugadores.length; i++)
+        {
+        	var jugador=jugadores[i];
+        	
+        	info +="- "+ jugador.nombre+"\n";
+        }
         if (callback) 
 		{
 		    callback(jugadores);
@@ -89,6 +152,8 @@ function createJugador(jugador, callback) {
     }).done(function (jugador) {
         console.log("Jugador created: " + JSON.stringify(jugador));
         callback(jugador);
+        input.style.display = 'none';
+        bot.style.display = 'none';
     })
 }
 
@@ -124,10 +189,11 @@ $(document).ready(function ()
 	
     loadJugadores(function (jugadores) 
     {
-        $('#info').replaceWith('<div id="jugadores registrados:">'+"Jugadores registrados: "+ JSON.stringify(jugadores) +'</div>')
+        
     });
 
     var input = $('#value-input')
+    
 
     //Handle add button
     $("#add-but").click(function () 
@@ -141,8 +207,8 @@ $(document).ready(function ()
             nombre: value
         }
         
-        createJugador(jugador, function (jugadorWithIp) {
-            //When jugador with ip is returned from server
+        createJugador(jugador, function (userWithId) {
+            currentJugador = userWithId;
             //showJugador(jugadorWithIp);
         });
     })
