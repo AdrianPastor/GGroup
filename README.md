@@ -40,6 +40,22 @@ Cuando la partida acaba sale en pantalla quién ha ganado y Aparece un botón "R
 **Diagrama de Clases**    
 ![alt text](https://i.imgur.com/fh3BBzA.png)  
   
+**Funcionamiento**
+Para iniciar el servidor de nuestro juego debemos entrar en la consola de comandos y situarnos en la carpeta target de nuestro juego, ahí ejecutaremos el codigo "java -jar Gentleball-2.jar" y con esto nuestro servidor se habrá iniciado.
+![alt text](https://i.imgur.com/XWdJyio.png)
+
+Ponemos en el navegador la ip del ordenador que haya creado el servidor, al entrar nos aparecerá una ventana que nos pedirá volver a meter dicha ip para así no tener que ir cambiando manualmente en el codigo si el servidor cambia de ordenador.
+![alt text](https://i.imgur.com/ygVyhRa.png)
+
+Una vez en el juego al darle al boton start podremos jugar offline sin que el servidor influya en el juego o entrar al modo online que nos llevará a un lobby en el cual podremos logearnos con un nombre de usuario
+![alt text](https://i.imgur.com/LOfxN4d.png)
+
+Una vez el usuario se logee, su nombre aparecerá en una lista justo debajo y el login desaparecerá para evitar que una misma persona cree múltiples usuarios
+![alt text](https://i.imgur.com/1DHJRCE.png)
+
+Si el servidor se desconecta aparecerá un cuadro en pantalla que indicará que así ha sido y habilitará un botón para que el jugador vuelva al menú principal.
+![alt text](https://i.imgur.com/L3JTeI8.png)
+
 
 
 
