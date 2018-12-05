@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,68 +27,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/jugadores")
 public class JugadorController {
 
-	Map<Long, Jugador> jugadores = new HashMap<Long, Jugador>();
-	long nextIp = -1;
+	Map<String, Jugador> jugadores = new HashMap<String, Jugador>();
+	ArrayList<String> listaip = new ArrayList<String>();
 	File fichero = new File("jugadores.txt");
 	
 	@GetMapping
-	public Collection<Jugador> jugadores() throws FileNotFoundException {
-		long ip = -1;
-		Scanner s = null;
-		s = new Scanner(fichero);
-		while (s.hasNextLine()) 
-		{
-			Jugador y = new Jugador();
-			String linea = s.nextLine();
-			y.setNombre(linea);
-			ip++;
-			y.setIp(ip);
-			jugadores.put(ip, y);
-		}
-		s.close();
-		nextIp=ip;
+	public Collection<Jugador> jugadores() throws FileNotFoundException 
+	{
 		return jugadores.values();
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Jugador nuevoJugador(@RequestBody Jugador jugador) throws IOException {
+	public Jugador nuevoJugador(@RequestBody Jugador jugador) throws IOException 
+	{
 		
-		if(compruebajugador(jugador.getNombre())==false)
-		{
-			nextIp++;
-			long ip = nextIp;
-			jugador.setIp(ip);
-			jugadores.put(ip, jugador);
+			jugadores.put(jugador.getNombre(), jugador);
 			FileWriter fw = new FileWriter(fichero,true);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.write(jugador.getNombre()+"\n");
 			pw.close();
 			fw.close();
 			return jugador;
-		}
-		else
-		{
-			System.out.println("Ese nombre ya existe");
-			return null;
-		}
-		
 	}
 	
-	public boolean compruebajugador(String nombre)
-	{
-		boolean comprobacion=false;
-		
-		if(jugadores.containsValue(nombre))
-		{
-			comprobacion=true;
-		}
-		
-		return comprobacion;
-	}
 	
 	@PutMapping("/{ip}")
-	public ResponseEntity<Jugador> actulizaJugador(@PathVariable long ip, @RequestBody Jugador jugadorActualizado) {
+	public ResponseEntity<Jugador> actulizaJugador(@PathVariable String ip, @RequestBody Jugador jugadorActualizado) {
 
 		Jugador savedJugador = jugadores.get(jugadorActualizado.getIp());
 
@@ -102,7 +68,7 @@ public class JugadorController {
 	}
 
 	@GetMapping("/{ip}")
-	public ResponseEntity<Jugador> getJugador(@PathVariable long ip) {
+	public ResponseEntity<Jugador> getJugador(@PathVariable String ip) {
 
 		Jugador savedJugador = jugadores.get(ip);
 
@@ -114,7 +80,7 @@ public class JugadorController {
 	}
 
 	@DeleteMapping("/{ip}")
-	public ResponseEntity<Jugador> borraJugador(@PathVariable long ip) {
+	public ResponseEntity<Jugador> borraJugador(@PathVariable String ip) {
 
 		Jugador savedJugador = jugadores.get(ip);
 

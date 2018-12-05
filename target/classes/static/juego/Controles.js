@@ -18,8 +18,8 @@ Gentleball.Controles.prototype = {
 
   actionOnClick0: function () 
   {
+	menu.destroy();
     this.game.state.start('MainMenu');
-    menu.destroy();
   }
 
 };

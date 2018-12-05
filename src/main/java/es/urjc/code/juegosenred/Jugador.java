@@ -2,17 +2,17 @@ package es.urjc.code.juegosenred;
 
 public class Jugador {
 
-	private long ip;
+	private String ip;
 	private String nombre;
 
 	public Jugador() {
 	}
 
-	public long getIp() {
+	public String getIp() {
 		return ip;
 	}
 
-	public void setIp(long ip) {
+	public void setIp(String ip) {
 		this.ip = ip;
 	}
 
@@ -26,7 +26,7 @@ public class Jugador {
 
 	@Override
 	public String toString() {
-		return "Jugador [ip=" + ip + ", nombre=" + nombre +"]";
+		return nombre;
 	}
 
 }
