@@ -58,4 +58,6 @@ Si el servidor se desconecta aparecerá un cuadro en pantalla que indicará que 
 
 
 
+En la carpeta target se generará un archivo txt llamado jugadores en el cual se almacenarán todos los jugadores que se han conectado alguna vez, esto lo utilizaremos en un futuro para crear una tabla de clasificación con un sistema de puntuación que implementaremos.
+
 
