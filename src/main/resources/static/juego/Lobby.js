@@ -103,7 +103,7 @@ Gentleball.Lobby.prototype = {
   actionOnClick3: function () 
   {
 	menu.destroy();
-	deleteJugador(iplocal);
+	deleteJugador(currentJugador.nombre);
     this.game.state.start('MainMenu');
     input.style.display = 'none';
     bot.style.display = 'none';
