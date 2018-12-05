@@ -21,7 +21,7 @@ input.style.display = 'none';
 bot.style.display = 'none';
 
 var ipserver;
-ipserver = prompt('Introduzca la ip del servidor:','192.168.1.100:8080');
+ipserver = prompt('Introduzca la ip del servidor:','http://localhost:8080');
 
 
 var iplocal;
