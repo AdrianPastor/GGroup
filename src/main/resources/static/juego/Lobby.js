@@ -4,7 +4,7 @@ var fondo;
 var play;
 var LobbyText;
 var exit;
-var servidorapagado=true;
+var servidorapagado=false;
 var info='';
 var jugadoreslista;
 var serveroff;
@@ -13,15 +13,23 @@ var botonserveroff;
 var currentJugador;
 
 
-var input = document.getElementById('value-input');
+var input = document.getElementById('valueinput');
 
 var bot = document.getElementById('add-but');
 
+var bot2 = document.getElementById('send-btn');
+
+var mensaje = document.getElementById('message');
+
+
+
 input.style.display = 'none';
 bot.style.display = 'none';
+bot2.style.display = 'none';
+mensaje.style.display = 'none';
 
 var ipserver;
-ipserver = prompt('Introduzca la ip del servidor:','IP');
+ipserver = prompt('Introduzca la ip del servidor:','192.168.1.40:8080');
 
 
 var iplocal;
@@ -66,6 +74,7 @@ Gentleball.Lobby.prototype = {
         input.style.display = '';
         bot.style.display = '';
         
+        
         setInterval(loadJugadores,3000);
   	},
   	
@@ -89,6 +98,8 @@ Gentleball.Lobby.prototype = {
     this.game.state.start('Game');
     input.style.display = 'none';
     bot.style.display = 'none';
+    bot2.style.display = 'none';
+    mensaje.style.display = 'none';
  ;
   },
   
@@ -98,6 +109,8 @@ Gentleball.Lobby.prototype = {
     this.game.state.start('Tipo');
     input.style.display = 'none';
     bot.style.display = 'none';
+    bot2.style.display = 'none';
+    mensaje.style.display = 'none';
   },
   
   actionOnClick3: function () 
@@ -107,6 +120,8 @@ Gentleball.Lobby.prototype = {
     this.game.state.start('MainMenu');
     input.style.display = 'none';
     bot.style.display = 'none';
+    bot2.style.display = 'none';
+    mensaje.style.display = 'none';
   },
   
 
@@ -154,6 +169,8 @@ function createJugador(jugador, callback) {
         callback(jugador);
         input.style.display = 'none';
         bot.style.display = 'none';
+        bot2.style.display = '';
+        mensaje.style.display = '';
     })
 }
 
@@ -192,7 +209,7 @@ $(document).ready(function ()
         
     });
 
-    var input = $('#value-input')
+    var input = $('#valueinput');
     
 
     //Handle add button
@@ -200,7 +217,6 @@ $(document).ready(function ()
     {
     	console.log(iplocal);
         var value = input.val();
-        input.val('');
 
         var jugador = {
         	ip: iplocal,
@@ -209,9 +225,25 @@ $(document).ready(function ()
         
         createJugador(jugador, function (userWithId) {
             currentJugador = userWithId;
-            //showJugador(jugadorWithIp);
         });
     })
     
+})
+
+$(document).ready(function(){
+	var connection = new WebSocket('ws://'+ipserver+'/echo');
+	connection.onerror = function(e) {
+	  console.log("WS error: " + e);
+	}
+	connection.onmessage = function(msg) {
+	  console.log("WS message: " + msg.data);
+	}
+    $('#send-btn').click(function() {
+    	var object = {
+    			valueinput : $(input).val(),
+    			message : $('#message').val()	
+    	}
+	    connection.send(JSON.stringify(object));
+    });
 })
 
